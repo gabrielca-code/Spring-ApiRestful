@@ -1,4 +1,4 @@
-package med.voli.api.infra;
+package med.voli.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
