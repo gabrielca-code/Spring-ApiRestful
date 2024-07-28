@@ -7,12 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/medicos")
+@EnableMethodSecurity(securedEnabled = true)
 public class MedicoController {
 
     @Autowired
@@ -46,6 +49,7 @@ public class MedicoController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @Secured("ROLE_ADMIN")
     public ResponseEntity excluir(@PathVariable Long id) {
         //medicoRepository.deleteById(id);
         var medico = medicoRepository.getReferenceById(id);
