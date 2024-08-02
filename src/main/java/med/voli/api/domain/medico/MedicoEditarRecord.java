@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import med.voli.api.domain.endereco.EnderecoRecordCadastrarMedico;
 
 public record MedicoEditarRecord(
-        @NotNull
+        @NotNull //define que o campo não pode ser nulo
         Long id,
         String nome,
         String telefone,

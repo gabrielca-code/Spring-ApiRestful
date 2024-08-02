@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class SecurityFilter extends OncePerRequestFilter {
+public class SecurityFilter extends OncePerRequestFilter { //herda da classe que define que o filtro sera executado OncePerRequest
 
     @Autowired
     private TokenService tokenService;
@@ -24,15 +24,15 @@ public class SecurityFilter extends OncePerRequestFilter {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException { //metodo padrao sobrescrito
         System.out.println("Chamando filtro");
-        var tokenJWT = recuperarToken(request);
+        var tokenJWT = recuperarToken(request); //pegando o token pela requisição
 
         if(tokenJWT != null) {
-            var subject = tokenService.getSubject(tokenJWT);
-            var usuario = usuarioRepository.findByLogin(subject);
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            var subject = tokenService.getSubject(tokenJWT); //retorna quem é o dono do token
+            var usuario = usuarioRepository.findByLogin(subject); //busca a referencia do dono do token no BD
+            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities()); //cria a autenticação via classe padrão de autenticação UsernamePasswordETC
+            SecurityContextHolder.getContext().setAuthentication(authentication); //mantem a autenticação dado o contexto de autencação do usuario
             System.out.println("Logado");
         }
 
@@ -40,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private String recuperarToken(HttpServletRequest request) {
-        var autorizationHeader = request.getHeader("Authorization");
+        var autorizationHeader = request.getHeader("Authorization"); //pega do cabeçalho da requisição o "Authorization"
         if(autorizationHeader != null)
             return autorizationHeader.replace("Bearer ", "");
 

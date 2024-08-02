@@ -7,22 +7,22 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
+@RestControllerAdvice //define a classe a ser mapeada como um advice, ou seja, irá ser sempre consultada pelo spring para verificar se um de seus métodos sera captado, nesse caso, as exceptions
 public class TratadorDeErros {
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class) //define que o metodo sera executado caso uma EntityNotFoundException for lançada
     public ResponseEntity tratarErro404() {
         return ResponseEntity.notFound().build();
-    }
+    } //retorna erro 404
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class) //define que o metodo sera executado caso uma MethodArgumentNotValidException for lançada
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
-        var erros = ex.getFieldErrors();
+        var erros = ex.getFieldErrors(); //pega quais campos estão preenchidos incorretamente
 
-        return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
+        return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList()); //retorna erro 400 e os campos mal preenchidos
     }
 
-    private record DadosErroValidacao(String campo, String mensagem) {
+    private record DadosErroValidacao(String campo, String mensagem) { //record local para converter FieldError em string
         public DadosErroValidacao(FieldError erro) {
             this(erro.getField(), erro.getDefaultMessage());
         }

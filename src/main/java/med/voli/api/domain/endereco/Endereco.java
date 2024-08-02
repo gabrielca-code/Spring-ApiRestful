@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Embeddable
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Embeddable //indica que apesar de ser uma classe separada, essa classe deve ser lida como parte da classe que a embedda
+@Getter // (lombok) cria os getters dos atributos da classe automaticamnente
+@NoArgsConstructor //(lombok) cria construtor padrão da classe sem argumentos
+@AllArgsConstructor //(lombok) cria construtor com todos argumentos da classe
 public class Endereco {
 
     private String logradouro;
@@ -19,7 +19,7 @@ public class Endereco {
     private String complemento;
     private String numero;
 
-    public Endereco(EnderecoRecordCadastrarMedico endereco) {
+    public Endereco(EnderecoRecordCadastrarMedico endereco) { //construtor para "converter" o DTO em objeto dessa classe
         this.logradouro = endereco.logradouro();
         this.bairro = endereco.bairro();
         this.cep = endereco.cep();
@@ -29,7 +29,7 @@ public class Endereco {
         this.numero = endereco.numero();
     }
 
-    public void atualizarInformacoes(EnderecoRecordCadastrarMedico dados) {
+    public void atualizarInformacoes(EnderecoRecordCadastrarMedico dados) { //método para atualizar os dados da classe
         if (dados.logradouro() != null) {
             this.logradouro = dados.logradouro();
         }
