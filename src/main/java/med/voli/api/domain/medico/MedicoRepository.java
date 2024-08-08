@@ -15,7 +15,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> { //define
                                                          // criados no padrão de nomes que a JPA mapeia e cria a query sozinha
 
     @Query("""
-        select m from Medico m 
+        select m from Medico m
         where
         m.ativo = true
         and
@@ -25,6 +25,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> { //define
             select c.medico.id from Consulta c
             where
             c.data = :data
+    and
+            c.motivo is null
         )
         order by rand()
         limit 1

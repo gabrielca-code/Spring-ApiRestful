@@ -32,4 +32,9 @@ public class Consulta {
 
     private LocalDateTime data;
 
+    private String motivo;
+
+    public void cancelar(String motivo) {
+        this.motivo = motivo;
+    }
 }
