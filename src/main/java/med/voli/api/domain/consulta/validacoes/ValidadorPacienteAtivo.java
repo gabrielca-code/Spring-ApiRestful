@@ -4,9 +4,13 @@ import med.voli.api.domain.ValidacaoException;
 import med.voli.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voli.api.domain.medico.MedicoRepository;
 import med.voli.api.domain.paciente.PacienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ValidadorPacienteAtivo {
+@Component
+public class ValidadorPacienteAtivo implements ValidadorAgendamentoDeConsulta {
 
+    @Autowired
     private PacienteRepository pacienteRepository;
 
     public void validar(DadosAgendamentoConsulta dados) {
