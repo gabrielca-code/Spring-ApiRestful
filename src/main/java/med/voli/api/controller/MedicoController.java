@@ -1,5 +1,6 @@
 package med.voli.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voli.api.domain.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController //define a classe como uma controller de uma API Rest
 @RequestMapping("/medicos") //define qual o mapeamento de requisição para essa controller
 @EnableMethodSecurity(securedEnabled = true) //configura a classe para ter segurança nos métodos dado as ROLES settadas nos métodos anotados
+@SecurityRequirement(name = "bearer-key")
 public class MedicoController {
 
     @Autowired //injeção de dependencia

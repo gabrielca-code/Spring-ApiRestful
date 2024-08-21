@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //muda a forma que a sessão é mantida, no caso stateless
                 .authorizeHttpRequests(req -> { //define quais regras para requisições
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll(); //define que para o POST em /login seja permito requisições de todos
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); //define que para o POST em /login seja permito requisições de todos
                     req.anyRequest().authenticated(); //define que para qualquer outro, seja necessario autenticar
                 }).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //define que o filtro executado posteriormente seja do SecurityFilter passando um objeto UsernamePasswordETC
                 .build();
